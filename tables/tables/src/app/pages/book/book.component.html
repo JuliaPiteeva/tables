@@ -1,0 +1,142 @@
+<section class="page-content container">
+    <dx-data-grid
+        class="table"
+        id="dataGrid"
+        [dataSource]="gridInfo.dataSource" 
+        [columnAutoWidth]="gridInfo.columnAutoWidth"
+        [columnWidth]="gridInfo.columnWidth"
+        [repaintChangesOnly]="gridInfo.repaintChangesOnly"
+        [twoWayBindingEnabled]="gridInfo.twoWayBindingEnabled"
+        [headerFilter]="gridInfo.headerFilter"
+        [sorting]="gridInfo.sorting"
+        [paging]="gridInfo.paging"
+        [pager]="gridInfo.pager"
+        [showRowLines]="gridInfo.showRowLines"
+        [showColumnLines]="gridInfo.showColumnLines"
+        [wordWrapEnabled]="gridInfo.wordWrapEnabled"
+        [loadPanel]="gridInfo.loadPanel"
+        [columnChooser]="gridInfo.columnChooser"
+        [selection]="gridInfo.selection"
+        [scrolling]="gridInfo.scrolling"
+        [editing]="gridInfo.editing"
+        [remoteOperations]="gridInfo.remoteOperations"
+        (onSelectionChanged)="selectRecord($event)"
+        (onRowUpdating)="onRowUpdating($event)"
+        (onEditingStart)="onEditingStart($event)"
+        width="100%"
+        noDataText="Нет данных"
+    >
+        <dxi-column *ngFor="let column of columns"
+            [caption]="column.caption"
+            [dataType]="column.dataType"
+            [minWidth]="column.minWidth"
+            [cssClass]="column.cssClass"
+            [cellTemplate]="column.cellTemplate"
+            [dataField]="column.dataField"
+            alignment="left"
+            format="yyyy-M-d HH:mm:ss"
+            >
+        </dxi-column>
+
+        <dxi-column 
+            dataField="Type"
+            caption="Тип" 
+            [width]="125" 
+            visibleIndex="0"
+            >
+            <dxo-lookup 
+                [dataSource]="optionTypes"
+                displayExpr="Name" 
+                valueExpr="ID">
+            </dxo-lookup>
+        </dxi-column>
+    
+        <dxi-column 
+            dataField="Mode" 
+            caption="Режим" 
+            [width]="125" 
+            visibleIndex="2">
+            <dxo-lookup 
+                [dataSource]="optionModes" 
+                displayExpr="Name" 
+                valueExpr="ID">
+            </dxo-lookup>
+        </dxi-column>
+
+        <div *dxTemplate="let cell of 'stateTemplate'">
+            <span 
+                class="tag" 
+                [ngClass]="'active'">
+                {{ cell.value }}
+            </span>
+        </div>
+
+        <dxi-column 
+            type="buttons" 
+            alignment="right" 
+            [minWidth]="155" 
+            [allowResizing]="false"
+            fixed="true">
+        </dxi-column>
+    </dx-data-grid>
+    
+    <dx-toolbar  class="toolbar">
+        <dxi-item 
+            location="before" 
+            widget="dxButton"
+            [options]="toolbarItemsOption.addButton"
+        >
+        </dxi-item>
+        <dxi-item 
+            location="before" 
+            widget="dxButton"
+            [options]="toolbarItemsOption.cloneButton"
+        ></dxi-item> 
+        <dxi-item 
+            location="before" 
+            widget="dxButton"
+            [options]="toolbarItemsOption.editGroupButton"
+        ></dxi-item>
+        <dxi-item 
+            location="before"
+            widget="dxButton"
+            [options]="toolbarItemsOption.printButton"
+        ></dxi-item>
+        <dxi-item 
+            location="after" 
+            widget="dxButton"
+            [disabled]="isSaveBtnActive"
+            [options]="toolbarItemsOption.saveButton"
+        ></dxi-item>
+    </dx-toolbar>
+
+    <dx-popup
+        [width]="'auto'"
+        minWidth="695"
+        [height]="'auto'"
+        [dragEnabled]="false"
+        position="center"
+        [hideOnOutsideClick]="false"
+        [showCloseButton]="true"
+        [(visible)]="dialogVisible"
+        contentTemplate="popup-content"
+        [wrapperAttr]="{ id: 'elementId', class: 'dialog-wrapper'}"
+    >
+        <dxo-position at="bottom" my="center" of="center" collision="fit"></dxo-position>
+        <div *dxTemplate="let data of 'popup-content'">
+            <label for="actionComment" class="dialog-label">Введите комментарий</label>
+            <input 
+                name="actionComment" 
+                [(ngModel)]="actionComment"
+                [placeholder]="actionName"
+                class="dialog-input"
+            >
+        </div>
+        <dxi-toolbar-item
+            widget="dxButton"
+            toolbar="bottom"
+            location="center"
+            [options]="saveAndCloseButtonOptions">
+        </dxi-toolbar-item>
+    </dx-popup>
+</section>

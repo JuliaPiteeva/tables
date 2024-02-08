@@ -1,0 +1,74 @@
+<section class="page-content container">
+    
+    <dx-data-grid
+        class="table"
+        id="dataGrid"
+        [dataSource]="gridInfo.dataSource" 
+        [columnAutoWidth]="gridInfo.columnAutoWidth"
+        [columnWidth]="gridInfo.columnWidth"
+        [repaintChangesOnly]="gridInfo.repaintChangesOnly"
+        [twoWayBindingEnabled]="gridInfo.twoWayBindingEnabled"
+        [headerFilter]="gridInfo.headerFilter"
+        [sorting]="gridInfo.sorting"
+        [paging]="gridInfo.paging"
+        [pager]="gridInfo.pager"
+        [showRowLines]="gridInfo.showRowLines"
+        [showColumnLines]="gridInfo.showColumnLines"
+        [loadPanel]="gridInfo.loadPanel"
+        [columnChooser]="gridInfo.columnChooser"
+        [selection]="gridInfo.selection"
+        [scrolling]="gridInfo.scrolling"
+        [wordWrapEnabled]="gridInfo.wordWrapEnabled"
+        [remoteOperations]="gridInfo.remoteOperations"
+        width="100%"
+        noDataText="Нет данных"
+    >
+        <dxi-column *ngFor="let column of columns"
+            [caption]="column.caption"
+            [dataType]="column.dataType"
+            [minWidth]="column.minWidth"
+            [cssClass]="column.cssClass"
+            [cellTemplate]="column.cellTemplate"
+            [dataField]="column.dataField"
+            [allowHeaderFiltering]="column.allowHeaderFiltering"
+            alignment="left"
+            format="yyyy-M-d HH:mm:ss"
+        ></dxi-column>
+
+        <div *dxTemplate="let cell of 'btnHandlerTemplate'">
+            <button 
+                class="handler-btn" 
+                [disabled]="cell.value === 'processed'" 
+                [ngClass]="cell.value" 
+                (click)="handleRecord(cell)">
+        </button>
+           <!-- class processed (blue) / unprocessed (red) -->
+        </div>
+
+        <div *dxTemplate="let cell of 'statusTemplate'">
+            <span class="tag" [ngClass]="cell.value">
+                {{ cell.value }}
+            </span>
+        </div>
+
+        <div *dxTemplate="let cell of 'typeTemplate'">
+            <span class="tag" [ngClass]="cell.value">
+                {{ cell.value }}
+            </span>
+        </div>
+
+    </dx-data-grid>
+
+    <dx-toolbar  class="toolbar">
+        <dxi-item 
+            location="before"
+            widget="dxButton"
+            [options]="toolbarItemsOption.hideMsgButton"
+        ></dxi-item>
+        <dxi-item 
+            location="before"
+            widget="dxButton"
+            [options]="toolbarItemsOption.printButton"
+        ></dxi-item>
+    </dx-toolbar>
+</section>

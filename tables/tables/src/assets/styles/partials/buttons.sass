@@ -1,0 +1,41 @@
+.text-button
+    @include text-button
+
+.icon-button
+    width: 18px
+    height: 18px
+    transition: background 0.3s
+
+.extended-icon-button
+    @include extended-icon-button()
+
+    &.print-btn
+        background-repeat: no-repeat
+        background-position: 50%
+        background-size: 70%
+        background-image: url('/assets/images/icons/print.svg')
+
+.custom-icon 
+  max-height: 100%
+  max-width: 100%
+  font-size: 28px
+  display: inline-block
+  vertical-align: middle
+
+.handler-btn
+    width: 20px
+    height: 20px
+    background-repeat: no-repeat
+    background-position: 50%
+    background-size: 14px
+    border-radius: 20px
+    &:disabled
+        cursor: default
+    &.processed
+        background-image: url('/assets/images/icons/radio-active.svg')
+        &:enabled:hover
+            background-color: $blue-bg-color
+    &.unprocessed
+        background-image: url('/assets/images/icons/radio-red.svg')
+        &:enabled:hover
+            background-color: $red-bg-color

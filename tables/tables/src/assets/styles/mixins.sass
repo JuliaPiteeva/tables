@@ -1,0 +1,42 @@
+@use "sass:map" as map
+
+@mixin set-coloured-tag($key)
+    color: map.get($coloured-tags-map, $key, text)
+    background-color: map.get($coloured-tags-map, $key, bg)
+
+
+@mixin bg-image($img-name)
+    background-repeat: no-repeat
+    background-position: 50%
+    background-size: 70%
+    background-image: url('../images/icons/#{$img-name}.svg')
+    &:enabled:hover, &:active, &:focus-within
+        background-image: url('../images/icons/#{$img-name}-active.svg')
+    
+@mixin mask($url)
+    mask: url($url) no-repeat 50% 50%
+
+
+@mixin filled-button()
+    background-color: $button-bg-color
+    transition: background ease-in-out 0.3s
+    &:enabled:hover, &:active, &:focus-within
+        background-color: $accent
+    &:disabled
+        background-color: $disabled-bg-color
+
+@mixin text-button()
+    height: $base-height
+    padding: 11px 10px
+    font-family: $font-stack
+    font-size: 16px
+    font-weight: 500
+    color: $button-text-color
+    @include filled-button
+
+
+@mixin extended-icon-button() //print
+    height: $base-height
+    width: $base-height
+    padding: 5px
+    @include filled-button

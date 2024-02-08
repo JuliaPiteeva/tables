@@ -1,0 +1,20 @@
+<header class="header container">
+    <nav class="nav">
+        <ul class="tabs">
+            <ng-container *ngFor="let tab of tabs">
+                <li [class]="tab.cssClass + ' tab'" [ngClass]="{'active': tab.state == activeState }" tabindex="0">
+                    <a 
+                        role="button" 
+                        (click)="goTo($event, tab)" 
+                        class="tab-link">
+                        {{ tab.text}}
+                    </a>
+                </li>
+            </ng-container>
+        </ul>
+    </nav>
+    <div class="user">
+        <span class="user-label" for="">User</span>
+        <span class="user-name">Julia</span>
+    </div>
+</header>

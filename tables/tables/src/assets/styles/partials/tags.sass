@@ -1,0 +1,22 @@
+.tag
+    padding: 3px 4px
+    border-radius: 4px
+    font-family: $font-stack
+    font-size: 12px
+    font-weight: 600
+    line-height: 14px
+    letter-spacing: 0em
+    text-align: center
+    @include set-coloured-tag(blue) // blue green red yellow
+
+    &.blue, &.active, &.edit, &.response
+        @include set-coloured-tag(blue)
+
+    &.red, &.inactive, &.remove, &.unprocessed
+        @include set-coloured-tag(red)
+
+    &.green, &.add, &.processed
+        @include set-coloured-tag(green)
+
+    &.yellow, &.request
+        @include set-coloured-tag(yellow)

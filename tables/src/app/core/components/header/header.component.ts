@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 
@@ -10,25 +10,30 @@ import { Subscription } from 'rxjs/internal/Subscription';
   standalone: true,
   imports: [CommonModule]
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   tabs = [
     {
       state: '/book',
       cssClass: '',
       text: 'Справочник',
       show: true,
-      active: false
+      active: false,
+      isCounterVisible: false,
+
     },
     {
       state: '/book-events',
-      cssClass: '', //warning
+      cssClass: 'warning', //warning
       text: 'События',
       show: true,
-      active: false
+      active: false,
+      isCounterVisible: true
     }
 ]
   activeState = '';
   subs: Subscription[] = [];
+  triggerCounter = 8;
+
 
   constructor(
     private router: Router
@@ -45,11 +50,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
     );
   }
 
+  ngAfterViewInit(): void {
+    this.setTriggerCounter();
+  }
+
   updateState(){
     this.activeState = this.router.url;
     // this.tabs[this.activeState]
     console.debug(this.activeState);
   }
+
+  setTriggerCounter() {
+    const countOfTasks = 50; // убрать
+    const pi = 22 / 7;
+    const radius = 10;
+    const circumferenceLen = 2 * pi * radius;
+    const percentOfUnprocessedTask = (this.triggerCounter * 100) / countOfTasks;
+    const progressLine = document.getElementById('progressLine');
+    const dasharray = `${circumferenceLen + (circumferenceLen * percentOfUnprocessedTask) / 100}`;
+    if (progressLine) progressLine.style.strokeDasharray = dasharray;
+  }
+
 
   goTo($event: any, tab: any){
     $event.preventDefault();

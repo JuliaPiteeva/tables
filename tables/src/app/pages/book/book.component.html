@@ -27,7 +27,6 @@
         noDataText="Нет данных"
     >
         <dxi-column *ngFor="let column of columns"
-            [caption]="column.caption"
             [dataType]="column.dataType"
             [minWidth]="column.minWidth"
             [cssClass]="column.cssClass"
@@ -39,31 +38,29 @@
         </dxi-column>
 
         <dxi-column 
-            dataField="Type"
-            caption="Тип" 
-            [width]="125" 
-            visibleIndex="0"
+            dataField="Position"
+            [width]="200" 
+            visibleIndex="6"
             >
             <dxo-lookup 
-                [dataSource]="optionTypes"
+                [dataSource]="positions"
                 displayExpr="Name" 
                 valueExpr="ID">
             </dxo-lookup>
         </dxi-column>
     
         <dxi-column 
-            dataField="Mode" 
-            caption="Режим" 
-            [width]="125" 
-            visibleIndex="2">
+            dataField="RegionID" 
+            [width]="175" 
+            visibleIndex="7">
             <dxo-lookup 
-                [dataSource]="optionModes" 
+                [dataSource]="regions" 
                 displayExpr="Name" 
                 valueExpr="ID">
             </dxo-lookup>
         </dxi-column>
 
-        <div *dxTemplate="let cell of 'stateTemplate'">
+        <div *dxTemplate="let cell of 'statusTemplate'">
             <span 
                 class="tag" 
                 [ngClass]="'active'">

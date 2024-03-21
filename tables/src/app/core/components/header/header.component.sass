@@ -1,45 +1,55 @@
 @use '../../../../assets/styles/variables' as var
+@use '../../../../assets/styles/mixins' as mixin
+
+$tab-counter-color: rgba(255, 151, 151, 1)
+$tab-shadow-color: rgba(255, 7, 7, 0.8)
+
 :host
     display: flex
     justify-content: flex-start
     margin-bottom: -2px
     width: 100%
 
-.header 
+.header
     width: 100%
     display: flex
     justify-content: space-between
 
-    
 .tabs
     display: flex
     justify-content: flex-start
     > :nth-child(n):not(.active)
-        border-bottom-color: var.$accent
+      border-bottom-color: var.$accent
 
 .tab
     min-width: 250px
     height: var.$base-height
+    display: flex
+    align-items: center
     transition: color ease-in-out 0.3s, border ease-in-out 0.3s, background ease-in-out 0.3s
-    border: 2px solid var.$border-color 
+    border: 2px solid var.$border-color
     cursor: pointer
-    vertical-align: middle
     color: var.$tab-text-color
-    line-height: var.$base-height   
-    position: relative 
-    
+    position: relative
+
     &:hover, &.active, &:active, &:focus
         color: var.$accent
         outline: var.$accent
         background-color: #fff
+
+    +mixin.desktop-small
+        width: 80px
+        min-width: 80px
 
     &.active
         border-color: var.$accent
         border-bottom-color: #fff
 
     &.warning
-        box-shadow: 0px 6px #fff, 0em -1px .4em rgba(255, 7, 7, 0.8)
-    
+        box-shadow: 0px 6px #fff, 0em -1px .4em $tab-shadow-color
+        .tab-link
+            padding-right: 10px
+
     &.active:after
         // content: ""
         display: block
@@ -50,25 +60,32 @@
         top: 100%
         left: 0
 
-
 .tab-link
     display: inline-block
-    height: 100%
     width: 100%
+    height: 100%
     padding: 0 20px
+    vertical-align: middle
+    line-height: 36px
     font-family: var.$font-stack
     font-size: 16px
     font-weight: 500
-    letter-spacing: 0em
+    letter-spacing: 0
     text-align: left
     text-transform: uppercase
     color: inherit
+    +mixin.desktop-small
+        background: no-repeat center/25px url('/assets/images/book.svg')
+
+.tab-link-text
+    +mixin.desktop-small
+        display: none
 
 .user
     min-width: 250px
     height: var.$base-height
     position: relative
-    border: 2px solid var.$border-color 
+    border: 2px solid var.$border-color
     border-bottom: 2px solid var.$accent
     vertical-align: middle
     padding: 10px 15px
@@ -90,3 +107,36 @@
 
 .user-name
     font-size: 14px
+
+.tab-counter
+    display: inline-block
+    width: 22px
+    height: 22px
+    margin-right: 10px
+    
+.progrress
+    width: 22px
+    height: 22px
+    border-radius: 50%
+
+.progrress-text
+    font-size: 10px
+    font-weight: 600
+    fill: $tab-counter-color
+    stroke-width: 2px
+
+$pi: 22/7
+$radius: 10
+$circumferenceLen: 2 * $pi * $radius
+
+.progress-red-line
+    fill: none
+    stroke-width: 2.2px
+    stroke: $tab-counter-color
+    stroke-dasharray: $circumferenceLen
+    stroke-dashoffset: $circumferenceLen
+    
+.progress-line
+    fill: none
+    stroke: var.$accent
+    stroke-width: 2.2px

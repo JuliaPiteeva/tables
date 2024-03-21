@@ -1,52 +1,53 @@
 import { Column } from "devextreme/ui/data_grid";
+export class Employee {
+  ID!: string;
+  FirstName!: string;
+  LastName!: string;
+  EmployeeStatus?: string;
+  Phone?: string;
+  Prefix?: string;
+  Position!: number; //7
+  BirthDate!: string;
+  Notes?: string;
+  Address?: string;
+  RegionID!: number; //11
+}
 
 export const BookColumnsInfo: Column[] = [
-  // 0 - Тип идентификатора
   {
-    dataField: 'CompanyName', 
-    caption: "CompanyName", 
-    dataType: 'string',
-    minWidth: 145
+    dataField: 'ID', 
+    minWidth: 50
   }, 
-  // 2 - Режим обработки
   {
-    dataField: 'State', 
-    caption: "State", 
-    cellTemplate: 'stateTemplate',  // flag
+    dataField: 'FirstName', 
     minWidth: 115
   },
-
   {
-    dataField: 'Date', 
-    caption: "Дата", 
-    dataType: 'datetime',
-    minWidth: 175,
-  }, 
-
-  {
-    dataField: 'Reason', 
-    caption: "Reason",
-    dataType: 'string',
-    minWidth: 200
+    dataField: 'LastName', 
+    minWidth: 115
   },
   {
-    dataField: 'Zipcode', 
-    caption: "Zipcode", 
-    dataType: 'string',
-    minWidth: 200
-  }, 
-  {
-    dataField: 'Comment', 
-    caption: "Комментарий", 
-    dataType: 'string',
+    dataField: 'Surname', 
     minWidth: 115
+  },
+  {
+    dataField: 'EmployeeStatus', 
+    cellTemplate: 'statusTemplate',  // flag
   },
   {
     dataField: 'Phone', 
-    caption: "Phone", 
     dataType: 'string',
     minWidth: 115
-  }
+  },
+  {
+    dataField: 'Notes', 
+    minWidth: 175,
+  },
+  {
+    dataField: 'BirthDate', 
+    dataType: 'datetime',
+    minWidth: 175,
+  }, 
   // edit buttons
 ]
 

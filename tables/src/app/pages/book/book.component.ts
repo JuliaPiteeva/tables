@@ -4,7 +4,7 @@ import { BookService } from './book.servise';
 import { BookColumnsInfo, BookTableInfo } from './book-table-info';
 import { DxDataGridComponent } from 'devextreme-angular/ui/data-grid';
 import CustomStore from 'devextreme/data/custom_store';
-import { OptionMode, OptionType } from './book';
+import { Position, Region } from './book';
 import { CommonModule } from '@angular/common';
 import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
 import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
@@ -34,8 +34,8 @@ export class BookComponent implements OnInit, AfterViewInit {
   tableInstance: dxDataGrid | undefined;
   gridInfo: any;
   columns: any = BookColumnsInfo;
-  optionTypes: OptionType[] = [];
-  optionModes: OptionMode[] = [];
+  positions: Position[] = [];
+  regions: Region[] = [];
   toolbarItemsOption: any;
   selectedRecords: any;
   isSaveBtnActive: boolean = true;
@@ -50,8 +50,8 @@ export class BookComponent implements OnInit, AfterViewInit {
   ) { 
     this.initGridInfo();
     this.prepareToolbar();
-    this.optionTypes = this.bookService.getTypes()
-    this.optionModes = this.bookService.getModes();
+    this.positions = this.bookService.getPositions()
+    this.regions = this.bookService.getRegions();
     this.saveAndCloseButtonOptions = {
       text: 'Сохранить',
       elementAttr: {class: 'text-button'},
@@ -77,7 +77,7 @@ export class BookComponent implements OnInit, AfterViewInit {
       dataSource: new CustomStore({
         key: 'ID',
         load: (options: any) => {
-          return TableMockData;
+          return this.bookService.getBooks();
         },
 
       }),
@@ -180,28 +180,3 @@ export class BookComponent implements OnInit, AfterViewInit {
   }
 
 }
-
-const TableMockData = [ 
-  {
-    ID: 1,
-    Type: 1,
-    CompanyName: 'CompanyName',
-    Mode: 2,
-    State: 'активен',
-    Date: '12.12.12',
-    Reason: 'Reason',
-    Zipcode: '582',
-    Phone: '15875'
-},
-{
-  ID: 2,
-  Type: 2,
-  CompanyName: 'CompanyName',
-  Mode: 5,
-  State: 'неактивен',
-  Date: '12.12.12',
-  Reason: 'Reason',
-  Zipcode: '582',
-  Phone: '15875'
-}
-]

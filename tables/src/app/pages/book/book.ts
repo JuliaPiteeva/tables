@@ -1,14 +1,13 @@
-export enum IDState {
+export enum EmployeeStatus {
     active,
     inactive,
 }
 
-export class OptionType {
+export class Region {
     ID: number | undefined;
     Name: string | undefined;
 }
-
-export class OptionMode {
+export class Position {
     ID: number | undefined;
     Name: string | undefined;
 }

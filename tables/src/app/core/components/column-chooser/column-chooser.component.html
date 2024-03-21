@@ -1,0 +1,28 @@
+<dx-popup
+  class="chooser"
+  [width]="480"
+  [(visible)]="visible"
+  (onHidden)="closeColumnChooser()"
+  #columnChooser
+>
+  <dxi-toolbar-item widget="dxButton" location="center" toolbar="bottom" [options]="applyOptions">
+  </dxi-toolbar-item>
+
+  <div *dxTemplate="let data of 'content'">
+    <dx-list
+      class="chooser-list list"
+      [(dataSource)]="listData"
+      displayExpr="caption"
+      searchExpr="caption"
+      keyExpr="dataField"
+      selectionMode="all"
+      [showSelectionControls]="true"
+      [searchEnabled]="true"
+      [(selectedItemKeys)]="selectedItems"
+      selectAllText="Показать все"
+      noDataText="Ничего не найдено"
+      (onSelectionChanged)="selectionChanged($event)"
+    >
+    </dx-list>
+  </div>
+</dx-popup>

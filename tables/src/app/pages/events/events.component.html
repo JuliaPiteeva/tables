@@ -4,6 +4,7 @@
         class="table"
         id="dataGrid"
         [dataSource]="gridInfo.dataSource" 
+        [columns]="columns"
         [columnAutoWidth]="gridInfo.columnAutoWidth"
         [columnWidth]="gridInfo.columnWidth"
         [repaintChangesOnly]="gridInfo.repaintChangesOnly"
@@ -22,6 +23,8 @@
         [remoteOperations]="gridInfo.remoteOperations"
         width="100%"
         noDataText="Нет данных"
+        [allowColumnReordering]="gridInfo.allowColumnReordering"
+        (onOptionChanged)="onOptionChanged($event)"
     >
         <dxi-column *ngFor="let column of columns"
             [caption]="column.caption"
@@ -31,6 +34,8 @@
             [cellTemplate]="column.cellTemplate"
             [dataField]="column.dataField"
             [allowHeaderFiltering]="column.allowHeaderFiltering"
+            [visibleIndex]="column.index"
+            [(visible)]="column.visible"
             alignment="left"
             format="yyyy-M-d HH:mm:ss"
         ></dxi-column>
@@ -70,5 +75,11 @@
             widget="dxButton"
             [options]="toolbarItemsOption.printButton"
         ></dxi-item>
+        <dxi-item 
+        location="before"
+        widget="dxButton"
+        [options]="toolbarItemsOption.columnChooser"
+    ></dxi-item>
     </dx-toolbar>
+    <app-column-chooser [(visible)]="isColumnChooserOpen" [columns]="columns"></app-column-chooser>
 </section>

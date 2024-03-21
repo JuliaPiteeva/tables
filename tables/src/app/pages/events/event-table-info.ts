@@ -1,5 +1,13 @@
 import { Column } from "devextreme/ui/data_grid";
 
+export interface EventTableColumn extends Column {
+    index?: number;
+}
+
+export class LogEvent {
+    Date!: string;
+    Status!: string;
+}
 export enum EventStatus {
     processed = 'обработано',
     unprocessed = 'необработано'
@@ -10,13 +18,13 @@ export enum EventType {
     response = 'ответ'
 }
 
-export interface EventRecorg {
+export interface EventRecord {
     date_of: string,
     status: string,
     type: string
 }
 
-export const EventColumnsInfo: Column[] = [
+export const EventColumnsInfo: EventTableColumn[] = [
     {
         dataField: 'status_toggle', 
         caption: "", 

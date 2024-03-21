@@ -2,11 +2,11 @@ import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { DxDataGridComponent, DxDataGridModule } from 'devextreme-angular/ui/data-grid';
 import CustomStore from 'devextreme/data/custom_store';
 import dxDataGrid from 'devextreme/ui/data_grid';
-import { EventColumnsInfo, EventTableInfo } from './event-table-info';
+import { EventColumnsInfo, EventTableColumn, EventTableInfo } from './event-table-info';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { custom, confirm } from 'devextreme/ui/dialog';
+import { custom } from 'devextreme/ui/dialog';
 import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
+import { ColumnChooserComponent } from '../../core/components/column-chooser/column-chooser.component';
 
 @Component({
   selector: 'app-events',
@@ -14,7 +14,8 @@ import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
   imports: [
     CommonModule, 
     DxDataGridModule,
-    DxToolbarModule
+    DxToolbarModule,
+    ColumnChooserComponent
   ],
   templateUrl: './events.component.html',
   styleUrl: './events.component.sass'
@@ -25,10 +26,16 @@ export class EventsComponent {
   dataGrid!: DxDataGridComponent;
   tableInstance: dxDataGrid | undefined;
   gridInfo: any;
-  columns: any = EventColumnsInfo;
+  columns: any = [];
   toolbarItemsOption: any;
+  isColumnChooserOpen = false;
 
   constructor(private cd: ChangeDetectorRef){
+    EventColumnsInfo.forEach((el: EventTableColumn, index: number) => {
+      el.index = index;
+      el.visible = true;
+      this.columns.push(el);
+    });
     this.initGridInfo();
     this.prepareToolbar();
   }
@@ -71,7 +78,15 @@ export class EventsComponent {
         onClick: () => {
           this.hideMessages();
         }
-      }
+      },
+      columnChooser: {
+        hint: 'Настроить столбцы',
+        value: true,
+        elementAttr: { class: 'extended-icon-button column-chooser-btn' },
+        onClick: () => {
+          this.isColumnChooserOpen = true;
+        },
+      },
     }
   }
 
@@ -104,6 +119,8 @@ export class EventsComponent {
         }]
     });
   }
+
+  onOptionChanged(e: any) {}
 }
 
 const TableMockData =  
